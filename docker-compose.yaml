@@ -1,0 +1,32 @@
+version: "3.3"
+
+services:
+  node-builder:
+    container_name: "node-builder"
+    build:
+      context: ./node/builder
+      dockerfile: Dockerfile
+    #command: tail -f /dev/null
+    environment:
+      - GIT_REPOSITORY=https://github.com/kubero-dev/template-nodeapp.git
+    volumes:
+      - ./data/node:/app
+  node-web:
+    container_name: "node-web"
+    build:
+      context: ./node/web
+      dockerfile: Dockerfile
+    #command: tail -f /dev/null
+    working_dir: /app
+    command: npm start
+    environment:
+      - PORT=9999
+    depends_on:
+      node-builder:
+        condition: service_completed_successfully
+    volumes:
+      - ./data/node:/app
+    ports:
+      - "8001:9999"
+volumes:
+  node: 
