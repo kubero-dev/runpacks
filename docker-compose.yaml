@@ -9,6 +9,7 @@ services:
     #command: tail -f /dev/null
     environment:
       - GIT_REPOSITORY=git@github.com:kubero-dev/template-nodeapp.git
+      - GIT_BRANCH=main
     volumes:
       - ./data/node:/app
       - ./keys/id_github:/root/.ssh/id_github
