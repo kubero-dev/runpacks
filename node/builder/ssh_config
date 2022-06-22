@@ -1,4 +1,4 @@
 Host *
     StrictHostKeyChecking no
 Host github.com
-    IdentityFile ~/.ssh/id_github
+    IdentityFile ~/.ssh/github
