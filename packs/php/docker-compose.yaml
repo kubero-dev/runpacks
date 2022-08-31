@@ -1,0 +1,25 @@
+version: "3.3"
+
+services:
+  php-build:
+    container_name: "php-build"
+    image: composer:latest
+    working_dir: /app
+    #command: tail -f /dev/null
+    command: 'sh init-build.sh'
+    volumes:
+      - ../../data:/app
+
+  php-run:
+    container_name: "php-run"
+    image: php:apache-buster
+    working_dir: /app
+    #command: tail -f /dev/null
+    command: 'sh init-web.sh'
+    depends_on:
+      php-build:
+        condition: service_completed_successfully
+    volumes:
+      - ../../data:/app
+    ports:
+      - "8002:80"

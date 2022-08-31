@@ -1,0 +1,28 @@
+version: "3.3"
+
+services:
+  node-build:
+    container_name: "node-build"
+    image: node:latest
+    working_dir: /app
+    #command: tail -f /dev/null
+    command: 'sh init-build.sh'
+    volumes:
+      - ../../data:/app
+
+
+  node-run:
+    container_name: "node-run"
+    image: node:latest
+    working_dir: /app
+    #command: tail -f /dev/null
+    command: 'sh init-web.sh'
+    environment:
+      - PORT=9999
+    depends_on:
+      node-build:
+        condition: service_completed_successfully
+    volumes:
+      - ../../data:/app
+    ports:
+      - "8001:9999"

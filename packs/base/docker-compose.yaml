@@ -1,0 +1,16 @@
+version: "3.3"
+
+services:
+  base-build:
+    container_name: "base-build"
+    build:
+      context: ./build
+    working_dir: /app
+    #command: tail -f /dev/null
+    #command: ../init.sh
+    environment:
+      - GIT_REPOSITORY=git@github.com:kubero-dev/template-nodeapp.git
+      - GIT_BRANCH=main
+    volumes:
+      - ../../data:/app
+      - ../../keys/id_github:/root/.ssh/deploykey

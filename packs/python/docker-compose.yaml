@@ -1,0 +1,25 @@
+version: "3.3"
+
+services:
+  python-build:
+    container_name: "python-build"
+    image: python:3.10-buster
+    working_dir: /app
+    #command: tail -f /dev/null
+    command: 'sh init-build.sh'
+    volumes:
+      - ../../data:/app
+
+  python-run:
+    container_name: "python-run"
+    image: python:3.10-buster
+    working_dir: /app
+    #command: tail -f /dev/null
+    command: 'sh init-web.sh'
+    depends_on:
+      python-build:
+        condition: service_completed_successfully
+    volumes:
+      - ../../data:/app
+    ports:
+      - "8003:80"
