@@ -1,6 +1,16 @@
 version: "3.3"
 
 services:
+  python-fetch: 
+    container_name: "python-fetch"
+    image: "ghcr.io/kubero-dev/docker-images/base:main"
+    environment:
+      - GIT_REPOSITORY=${GIT_REPOSITORY:-git@github.com:kubero-dev/template-nodeapp.git}
+      - GIT_BRANCH=${GIT_BRANCH:-main}
+    volumes:
+      - ../../data:/app
+      - ../../keys/deploykey:/root/.ssh/deploykey
+
   python-build:
     container_name: "python-build"
     image: python:3.10-buster
@@ -9,6 +19,9 @@ services:
     command: 'sh init-build.sh'
     volumes:
       - ../../data:/app
+    depends_on:
+      python-fetch:
+        condition: service_completed_successfully
 
   python-run:
     container_name: "python-run"
@@ -16,10 +29,10 @@ services:
     working_dir: /app
     #command: tail -f /dev/null
     command: 'sh init-web.sh'
-    depends_on:
-      python-build:
-        condition: service_completed_successfully
     volumes:
       - ../../data:/app
     ports:
       - "8003:80"
+    depends_on:
+      python-build:
+        condition: service_completed_successfully

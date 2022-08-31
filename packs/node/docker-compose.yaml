@@ -1,6 +1,17 @@
 version: "3.3"
 
 services:
+
+  node-fetch: 
+    container_name: "node-fetch"
+    image: "ghcr.io/kubero-dev/docker-images/base:main"
+    environment:
+      - GIT_REPOSITORY=${GIT_REPOSITORY:-git@github.com:kubero-dev/template-nodeapp.git}
+      - GIT_BRANCH=${GIT_BRANCH:-main}
+    volumes:
+      - ../../data:/app
+      - ../../keys/deploykey:/root/.ssh/deploykey
+
   node-build:
     container_name: "node-build"
     image: node:latest
@@ -9,6 +20,9 @@ services:
     command: 'sh init-build.sh'
     volumes:
       - ../../data:/app
+    depends_on:
+      node-fetch:
+        condition: service_completed_successfully
 
 
   node-run:
@@ -19,10 +33,10 @@ services:
     command: 'sh init-web.sh'
     environment:
       - PORT=9999
-    depends_on:
-      node-build:
-        condition: service_completed_successfully
     volumes:
       - ../../data:/app
     ports:
       - "8001:9999"
+    depends_on:
+      node-build:
+        condition: service_completed_successfully
