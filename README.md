@@ -1,6 +1,15 @@
 # Kubero Docker-images
 
-This is the home of the Kubero Base image. The main purpose of this image ist to fetch the code from the repository and prepare the unit scripts.
+This is the home of the Kubero Base image. The main purpose of this image ist to fetch the code from the repository and prepare the init scripts based on the Procfile.
+
+For now only the Procfile is respected (devfile and app.json may follow in the future).
+
+Format of the Procfile with a node application:
+```
+build: npm install
+web: node index.js
+worker: node worker.js
+```
 
 ## Usage
 
