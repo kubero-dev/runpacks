@@ -5,7 +5,7 @@ services:
     container_name: "go-gin-fetch"
     image: "ghcr.io/kubero-dev/docker-images/base:main"
     environment:
-      - GIT_REPOSITORY=${GIT_REPOSITORY:-git@github.com:kubero-dev/template-static.git}
+      - GIT_REPOSITORY=${GIT_REPOSITORY:-git@github.com:kubero-dev/template-go-gin.git}
       - GIT_BRANCH=${GIT_BRANCH:-main}
     volumes:
       - ../../data:/app
@@ -13,7 +13,7 @@ services:
 
   go-gin-build:
     container_name: "go-gin-build"
-    image: busybox:latest
+    image: golang:alpine
     working_dir: /app
     #command: tail -f /dev/null
     command: 'sh init-build.sh'
@@ -25,16 +25,16 @@ services:
 
   go-gin-run:
     container_name: "go-gin-run"
-    image:  webdevops/nginx:alpine
+    image: golang:alpine
     working_dir: /app
     #command: tail -f /dev/null
-    #command: 'sh init-web.sh'
+    command: 'sh init-web.sh'
     environment:
       - WEB_DOCUMENT_INDEX=index.html
     volumes:
       - ../../data:/app
     ports:
-      - "8006:80"
+      - "8006:8080"
     depends_on:
       go-gin-build:
         condition: service_completed_successfully
