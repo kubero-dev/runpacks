@@ -1,0 +1,40 @@
+version: "3.3"
+
+services:
+  static-fetch: 
+    container_name: "static-fetch"
+    image: "ghcr.io/kubero-dev/docker-images/base:main"
+    environment:
+      - GIT_REPOSITORY=${GIT_REPOSITORY:-git@github.com:kubero-dev/template-static.git}
+      - GIT_BRANCH=${GIT_BRANCH:-main}
+    volumes:
+      - ../../data:/app
+      - ../../keys/deploykey:/root/.ssh/deploykey
+
+  static-build:
+    container_name: "static-build"
+    image: busybox:latest
+    working_dir: /app
+    #command: tail -f /dev/null
+    command: 'sh init-build.sh'
+    volumes:
+      - ../../data:/app
+    depends_on:
+      static-fetch:
+        condition: service_completed_successfully
+
+  static-run:
+    container_name: "static-run"
+    image:  webdevops/nginx:alpine
+    working_dir: /app
+    #command: tail -f /dev/null
+    #command: 'sh init-web.sh'
+    environment:
+      - WEB_DOCUMENT_INDEX=index.html
+    volumes:
+      - ../../data:/app
+    ports:
+      - "8003:80"
+    depends_on:
+      static-build:
+        condition: service_completed_successfully
