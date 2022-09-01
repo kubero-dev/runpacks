@@ -5,7 +5,7 @@ services:
     container_name: "python-fetch"
     image: "ghcr.io/kubero-dev/docker-images/base:main"
     environment:
-      - GIT_REPOSITORY=${GIT_REPOSITORY:-git@github.com:kubero-dev/template-nodeapp.git}
+      - GIT_REPOSITORY=${GIT_REPOSITORY:-git@github.com:kubero-dev/template-python.git}
       - GIT_BRANCH=${GIT_BRANCH:-main}
     volumes:
       - ../../data:/app
@@ -32,7 +32,7 @@ services:
     volumes:
       - ../../data:/app
     ports:
-      - "8003:80"
+      - "8010:8080"
     depends_on:
       python-build:
         condition: service_completed_successfully
