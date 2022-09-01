@@ -1,0 +1,38 @@
+version: "3.3"
+
+services:
+  python-flask-fetch: 
+    container_name: "python-flask-fetch"
+    image: "ghcr.io/kubero-dev/docker-images/base:main"
+    environment:
+      - GIT_REPOSITORY=${GIT_REPOSITORY:-git@github.com:kubero-dev/template-python-flask.git}
+      - GIT_BRANCH=${GIT_BRANCH:-main}
+    volumes:
+      - ../../data:/app
+      - ../../keys/deploykey:/root/.ssh/deploykey
+
+  python-flask-build:
+    container_name: "python-flask-build"
+    image: python:3.10-buster
+    working_dir: /app
+    #command: tail -f /dev/null
+    command: 'bash init-build.sh'
+    volumes:
+      - ../../data:/app
+    depends_on:
+      python-flask-fetch:
+        condition: service_completed_successfully
+
+  python-flask-run:
+    container_name: "python-flask-run"
+    image: python:3.10-buster
+    working_dir: /app
+    #command: tail -f /dev/null
+    command: 'bash init-web.sh'
+    volumes:
+      - ../../data:/app
+    ports:
+      - "8011:5000"
+    depends_on:
+      python-flask-build:
+        condition: service_completed_successfully
