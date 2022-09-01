@@ -5,7 +5,7 @@ services:
     container_name: "php-fetch"
     image: "ghcr.io/kubero-dev/docker-images/base:main"
     environment:
-      - GIT_REPOSITORY=${GIT_REPOSITORY:-git@github.com:kubero-dev/template-nodeapp.git}
+      - GIT_REPOSITORY=${GIT_REPOSITORY:-git@github.com:kubero-dev/template-php-laravel.git}
       - GIT_BRANCH=${GIT_BRANCH:-main}
     volumes:
       - ../../data:/app
@@ -25,10 +25,15 @@ services:
 
   php-run:
     container_name: "php-run"
-    image: php:apache-buster
+    image: webdevops/php-apache:8.1
     working_dir: /app
     #command: tail -f /dev/null
-    command: 'sh init-web.sh'
+    #command: 'sh init-web.sh'
+    env_file:
+      - ../../data/.env.example
+    environment:
+      - APP_KEY=base64:YmhiZ3J6NXV4aGE1bnh6cTh0eXJ0NzFqanozMnRmOXk=
+      - WEB_DOCUMENT_ROOT=/app/public
     volumes:
       - ../../data:/app
     ports:
