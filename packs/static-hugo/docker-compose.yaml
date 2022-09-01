@@ -27,8 +27,9 @@ services:
     container_name: "static-hugo-run"
     image:  webdevops/nginx:alpine
     working_dir: /app
+    #command: supervisord
     #command: tail -f /dev/null
-    #command: 'sh init-web.sh'
+    command: 'sh init-web.sh'
     environment:
       - WEB_DOCUMENT_ROOT=/app/public
       - WEB_DOCUMENT_INDEX=index.html

@@ -30,7 +30,7 @@ services:
     #command: tail -f /dev/null
     #command: 'sh init-web.sh'
     env_file:
-      - ../../data/.env.example
+      - .env
     environment:
       - APP_KEY=base64:YmhiZ3J6NXV4aGE1bnh6cTh0eXJ0NzFqanozMnRmOXk=
       - WEB_DOCUMENT_ROOT=/app/public
