@@ -17,7 +17,7 @@ services:
     image: node:latest
     working_dir: /app
     #command: tail -f /dev/null
-    command: 'sh init-build.sh'
+    command: './init-build.sh'
     volumes:
       - ../../data:/app
     depends_on:
@@ -30,7 +30,7 @@ services:
     image: node:latest
     working_dir: /app
     #command: tail -f /dev/null
-    command: 'sh init-web.sh'
+    command: './init-web.sh'
     environment:
       - PORT=9999
     volumes:

@@ -16,7 +16,7 @@ services:
     image: busybox:latest
     working_dir: /app
     #command: tail -f /dev/null
-    command: 'sh init-build.sh'
+    command: './init-build.sh'
     volumes:
       - ../../data:/app
     depends_on:
@@ -28,7 +28,7 @@ services:
     image:  ruby:2.7
     working_dir: /app
     #command: tail -f /dev/null
-    command: 'sh init-web.sh'
+    command: './init-web.sh'
     volumes:
       - ../../data:/app
     ports:

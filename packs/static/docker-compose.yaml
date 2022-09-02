@@ -16,7 +16,7 @@ services:
     image: busybox:latest
     working_dir: /app
     #command: tail -f /dev/null
-    command: 'sh init-build.sh'
+    command: './init-build.sh'
     volumes:
       - ../../data:/app
     depends_on:
@@ -29,7 +29,7 @@ services:
     working_dir: /app
     #command: supervisord
     #command: tail -f /dev/null
-    command: 'sh init-web.sh'
+    command: './init-web.sh'
     environment:
       - WEB_DOCUMENT_INDEX=index.html
     volumes:

@@ -15,8 +15,8 @@ services:
     container_name: "static-hugo-build"
     image: klakegg/hugo
     working_dir: /app
-    command: -D
-    #command: 'sh init-build.sh'
+    #command: tail -f /dev/null
+    command: './init-build.sh'
     volumes:
       - ../../data:/app
     depends_on:
@@ -27,9 +27,8 @@ services:
     container_name: "static-hugo-run"
     image:  webdevops/nginx:alpine
     working_dir: /app
-    #command: supervisord
     #command: tail -f /dev/null
-    command: 'sh init-web.sh'
+    command: './init-web.sh'
     environment:
       - WEB_DOCUMENT_ROOT=/app/public
       - WEB_DOCUMENT_INDEX=index.html
