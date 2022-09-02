@@ -16,12 +16,15 @@ rm -rf .git
 
 echo "========== write startupscripts baed on Procfile"
 BUILD_CMD=$(cat Procfile | grep build | awk -F  ": " '{print $2}')
-echo -n $BUILD_CMD > init-build.sh
+echo "#!/bin/sh" > init-build.sh
+echo -n $BUILD_CMD >> init-build.sh
 
 WEB_CMD=$(cat Procfile | grep web | awk -F  ": " '{print $2}') 
-echo -n $WEB_CMD > init-web.sh
+echo "#!/bin/sh" > init-build.sh
+echo -n $WEB_CMD >> init-web.sh
 
 WORKER_CMD=$(cat Procfile | grep worker | awk -F  ": " '{print $2}')
-echo -n $WORKER_CMD > init-worker.sh
+echo "#!/bin/sh" > init-build.sh
+echo -n $WORKER_CMD >> init-worker.sh
 
 chmod +x init-*.sh
