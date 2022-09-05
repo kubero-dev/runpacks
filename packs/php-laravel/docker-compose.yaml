@@ -25,7 +25,7 @@ services:
 
   php-run:
     container_name: "php-run"
-    image: webdevops/php-apache:8.1
+    image: thecodingmachine/php:8.1-v4-apache
     working_dir: /app
     #command: tail -f /dev/null
     command: './init-web.sh'
@@ -33,11 +33,11 @@ services:
       - .env
     environment:
       - APP_KEY=base64:YmhiZ3J6NXV4aGE1bnh6cTh0eXJ0NzFqanozMnRmOXk=
-      - WEB_DOCUMENT_ROOT=/app/public
+      - APACHE_DOCUMENT_ROOT=/app/public
     volumes:
-      - ../../data:/app:rw
+      - ../../data:/app:ro
     ports:
       - "8002:80"
-    depends_on:
-      php-build:
-        condition: service_completed_successfully
+    #depends_on:
+    #  php-build:
+    #    condition: service_completed_successfully
