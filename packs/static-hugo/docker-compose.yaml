@@ -33,7 +33,7 @@ services:
       - WEB_DOCUMENT_ROOT=/app/public
       - WEB_DOCUMENT_INDEX=index.html
     volumes:
-      - ../../data:/app
+      - ../../data:/app:ro
     ports:
       - "8005:80"
     depends_on:

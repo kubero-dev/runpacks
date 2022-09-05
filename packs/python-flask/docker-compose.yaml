@@ -30,7 +30,7 @@ services:
     #command: tail -f /dev/null
     command: './init-web.sh'
     volumes:
-      - ../../data:/app
+      - ../../data:/app:ro
     ports:
       - "8011:5000"
     depends_on:

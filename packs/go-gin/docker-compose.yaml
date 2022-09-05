@@ -32,7 +32,7 @@ services:
     environment:
       - WEB_DOCUMENT_INDEX=index.html
     volumes:
-      - ../../data:/app
+      - ../../data:/app:ro
     ports:
       - "8006:8080"
     depends_on:

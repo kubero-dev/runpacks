@@ -34,7 +34,7 @@ services:
     environment:
       - PORT=9999
     volumes:
-      - ../../data:/app
+      - ../../data:/app:ro
     ports:
       - "8001:9999"
     depends_on:

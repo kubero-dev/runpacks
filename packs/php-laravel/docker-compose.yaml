@@ -35,7 +35,7 @@ services:
       - APP_KEY=base64:YmhiZ3J6NXV4aGE1bnh6cTh0eXJ0NzFqanozMnRmOXk=
       - WEB_DOCUMENT_ROOT=/app/public
     volumes:
-      - ../../data:/app
+      - ../../data:/app:rw
     ports:
       - "8002:80"
     depends_on:
