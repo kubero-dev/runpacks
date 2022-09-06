@@ -77,7 +77,7 @@ jobs:
         id: php-build-and-push
         uses: docker/build-push-action@v3
         with:
-          context: ./packs/php/build
+          context: ./packs/php-laravel
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.php-meta.outputs.tags }}
           labels: ${{ steps.php-meta.outputs.labels }}
