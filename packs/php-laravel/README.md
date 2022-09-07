@@ -7,3 +7,5 @@ Defaults changed from thecodingmachine image:
 | `KUBERO_DOCUMENT_ROOT` | `/app/public` | The Apache root directory |
 | `APACHE_PORT` | `www-data` | The non encrypted port used on Kubernetes |
 | `APACHE_SSL_PORT` | `www-data` | The encrypted port (not required) |
+
+More Information about the codingmachine imge : https://thecodingmachine.io/building_the_ultimate_general_purpose_php_docker_image
