@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 
 #echo "========= load deployment keys"
 #eval `ssh-agent`
@@ -15,19 +16,25 @@ git clone --recurse-submodules $GIT_REPOSITORY .
 rm -rf .git
 
 echo "========== write startupscripts based on Procfile"
-BUILD_CMD=$(cat Procfile | grep build | awk -F  ": " '{print $2}')
-echo init-build.sh
-echo "#!/bin/sh" > init-build.sh
-echo -n $BUILD_CMD >> init-build.sh
+if [ ! -f init_build.sh ]
+    BUILD_CMD=$(cat Procfile | grep build | awk -F  ": " '{print $2}')
+    echo init-build.sh
+    echo "#!/bin/sh" > init-build.sh
+    echo -n $BUILD_CMD >> init-build.sh
+fi
 
-WEB_CMD=$(cat Procfile | grep web | awk -F  ": " '{print $2}') 
-echo init-web.sh
-echo "#!/bin/sh" > init-web.sh
-echo -n $WEB_CMD >> init-web.sh
+if [ ! -f init_build.sh ]
+    WEB_CMD=$(cat Procfile | grep web | awk -F  ": " '{print $2}') 
+    echo init-web.sh
+    echo "#!/bin/sh" > init-web.sh
+    echo -n $WEB_CMD >> init-web.sh
+fi
 
-WORKER_CMD=$(cat Procfile | grep worker | awk -F  ": " '{print $2}')
-echo init-worker.sh
-echo "#!/bin/sh" > init-worker.sh
-echo -n $WORKER_CMD >> init-worker.sh
+if [ ! -f init_build.sh ]
+    WORKER_CMD=$(cat Procfile | grep worker | awk -F  ": " '{print $2}')
+    echo init-worker.sh
+    echo "#!/bin/sh" > init-worker.sh
+    echo -n $WORKER_CMD >> init-worker.sh
+fi
 
 chmod +x init-*.sh
