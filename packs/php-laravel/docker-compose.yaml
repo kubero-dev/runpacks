@@ -29,9 +29,9 @@ services:
       context: .
       dockerfile: Dockerfile
     working_dir: /app
-    command: apache2-foreground
+    #command: apache2-foreground
     #command: tail -f /dev/null
-    #command: './init-web.sh'
+    command: './init-web.sh'
     env_file:
       - .env
     environment:
@@ -40,26 +40,6 @@ services:
       - ../../data:/app:rw
     ports:
       - "8002:8080"
-    #depends_on:
-    #  php-build:
-    #    condition: service_completed_successfully
-
-
-  php-run-not-recommended:
-    container_name: "php-php-run-not-recommended"
-    image: webdevops/php-apache:8.1
-    working_dir: /app
-    command: tail -f /dev/null
-    #command: './init-web.sh'
-    env_file:
-      - .env
-    environment:
-      - APP_KEY=base64:YmhiZ3J6NXV4aGE1bnh6cTh0eXJ0NzFqanozMnRmOXk=
-      - WEB_DOCUMENT_ROOT=/app/public
-    volumes:
-      - ../../data:/app:ro
-    ports:
-      - "8002:80"
-    #depends_on:
-    #  php-build:
-    #    condition: service_completed_successfully
+    depends_on:
+      php-build:
+        condition: service_completed_successfully
