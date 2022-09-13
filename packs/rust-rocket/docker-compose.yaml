@@ -1,0 +1,38 @@
+version: "3.3"
+
+services:
+  rust-rocket-fetch: 
+    container_name: "rust-rocket-fetch"
+    image: "ghcr.io/kubero-dev/docker-images/base:main"
+    environment:
+      - GIT_REPOSITORY=${GIT_REPOSITORY:-git@github.com:kubero-dev/template-rust-rocket.git}
+      - GIT_BRANCH=${GIT_BRANCH:-main}
+    volumes:
+      - ../../data:/app
+      - ../../keys/deploykey:/root/.ssh/deploykey
+
+  rust-rocket-build:
+    container_name: "rust-rocket-build"
+    image: rust:slim
+    working_dir: /app
+    #command: tail -f /dev/null
+    command: './init-build.sh'
+    volumes:
+      - ../../data:/app
+    depends_on:
+      rust-rocket-fetch:
+        condition: service_completed_successfully
+
+  rust-rocket-run:
+    container_name: "rust-rocket-run"
+    image:  rust:slim
+    working_dir: /app
+    #command: tail -f /dev/null
+    command: './init-web.sh'
+    volumes:
+      - ../../data:/app:ro
+    ports:
+      - "8012:8000"
+    depends_on:
+      rust-rocket-build:
+        condition: service_completed_successfully
