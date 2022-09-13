@@ -1,0 +1,38 @@
+version: "3.3"
+
+services:
+  ruby-rails-fetch: 
+    container_name: "ruby-rails-fetch"
+    image: "ghcr.io/kubero-dev/docker-images/base:main"
+    environment:
+      - GIT_REPOSITORY=${GIT_REPOSITORY:-git@github.com:kubero-dev/template-ruby-rails.git}
+      - GIT_BRANCH=${GIT_BRANCH:-main}
+    volumes:
+      - ../../data:/app
+      - ../../keys/deploykey:/root/.ssh/deploykey
+
+  ruby-rails-build:
+    container_name: "ruby-rails-build"
+    image: ruby:2.7
+    working_dir: /app
+    #command: tail -f /dev/null
+    command: './init-build.sh'
+    volumes:
+      - ../../data:/app
+    depends_on:
+      ruby-rails-fetch:
+        condition: service_completed_successfully
+
+  ruby-rails-run:
+    container_name: "ruby-rails-run"
+    image:  ruby:2.7
+    working_dir: /app
+    #command: tail -f /dev/null
+    command: './init-web.sh'
+    volumes:
+      - ../../data:/app:rw
+    ports:
+      - "8011:3000"
+    depends_on:
+      ruby-rails-build:
+        condition: service_completed_successfully
