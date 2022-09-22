@@ -15,21 +15,21 @@ git clone --recurse-submodules $GIT_REPOSITORY .
 rm -rf .git
 
 echo "========== write startupscripts based on Procfile"
-if [ ! -f init_build.sh ]
+if [ ! -f init_build.sh ]; then
     BUILD_CMD=$(cat Procfile | grep build | awk -F  ": " '{print $2}')
     echo init-build.sh
     echo "#!/bin/sh" > init-build.sh
     echo -n $BUILD_CMD >> init-build.sh
 fi
 
-if [ ! -f init_build.sh ]
+if [ ! -f init_build.sh ]; then
     WEB_CMD=$(cat Procfile | grep web | awk -F  ": " '{print $2}') 
     echo init-web.sh
     echo "#!/bin/sh" > init-web.sh
     echo -n $WEB_CMD >> init-web.sh
 fi
 
-if [ ! -f init_build.sh ]
+if [ ! -f init_build.sh ]; then
     WORKER_CMD=$(cat Procfile | grep worker | awk -F  ": " '{print $2}')
     echo init-worker.sh
     echo "#!/bin/sh" > init-worker.sh
