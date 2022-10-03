@@ -11,26 +11,38 @@ rm -rf /app/* /app/.* >> /dev/null 2>&1
 echo "========== Clone Repository from $GIT_REPOSITORY"
 cd /app 
 git clone --recurse-submodules $GIT_REPOSITORY .
-#git checkout $GIT_BRANCH
+#git checkout $GIT_BRANCH #TODO add branch support
 rm -rf .git
 
 echo "========== write startupscripts based on Procfile"
 if [ ! -f init_build.sh ]; then
-    BUILD_CMD=$(cat Procfile | grep build | awk -F  ": " '{print $2}')
+    if [ -f Procfile ]; then
+        BUILD_CMD=$(cat Procfile | grep build | awk -F  ": " '{print $2}')
+    else
+        BUILD_CMD=$KUBERO_BUILDPACK_DEFAULT_BUILD_CMD
+    fi
     echo init-build.sh
     echo "#!/bin/sh" > init-build.sh
     echo -n $BUILD_CMD >> init-build.sh
 fi
 
 if [ ! -f init_build.sh ]; then
-    WEB_CMD=$(cat Procfile | grep web | awk -F  ": " '{print $2}') 
+    if [ -f Procfile ]; then
+        WEB_CMD=$(cat Procfile | grep build | awk -F  ": " '{print $2}')
+    else
+        WEB_CMD=$KUBERO_BUILDPACK_DEFAULT_RUN_CMD
+    fi
     echo init-web.sh
     echo "#!/bin/sh" > init-web.sh
     echo -n $WEB_CMD >> init-web.sh
 fi
 
 if [ ! -f init_build.sh ]; then
-    WORKER_CMD=$(cat Procfile | grep worker | awk -F  ": " '{print $2}')
+    if [ -f Procfile ]; then
+        WORKER_CMD=$(cat Procfile | grep build | awk -F  ": " '{print $2}')
+    else
+        WORKER_CMD=$KUBERO_BUILDPACK_DEFAULT_RUN_CMD
+    fi
     echo init-worker.sh
     echo "#!/bin/sh" > init-worker.sh
     echo -n $WORKER_CMD >> init-worker.sh
