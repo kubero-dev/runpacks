@@ -2,12 +2,14 @@ version: "3.3"
 
 services:
 
-  node-fetch: 
+  node-fetch:
     container_name: "node-fetch"
     image: "ghcr.io/kubero-dev/docker-images/base:main"
     environment:
       - GIT_REPOSITORY=${GIT_REPOSITORY:-git@github.com:kubero-dev/template-nodeapp.git}
       - GIT_BRANCH=${GIT_BRANCH:-main}
+      - KUBERO_BUILDPACK_DEFAULT_BUILD_CMD="npm install"
+      - KUBERO_BUILDPACK_DEFAULT_RUN_CMD="node index.js"
     volumes:
       - ../../data:/app
       - ../../keys/deploykey:/root/.ssh/deploykey

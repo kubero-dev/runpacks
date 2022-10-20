@@ -9,7 +9,7 @@ echo "========== whipe the app dir"
 rm -rf /app/* /app/.* >> /dev/null 2>&1
 
 echo "========== Clone Repository from $GIT_REPOSITORY"
-cd /app 
+cd /app
 git clone --recurse-submodules $GIT_REPOSITORY .
 #git checkout $GIT_BRANCH #TODO add branch support
 rm -rf .git
@@ -26,9 +26,9 @@ if [ ! -f init_build.sh ]; then
     echo -n $BUILD_CMD >> init-build.sh
 fi
 
-if [ ! -f init_build.sh ]; then
+if [ ! -f init-web.sh ]; then
     if [ -f Procfile ]; then
-        WEB_CMD=$(cat Procfile | grep build | awk -F  ": " '{print $2}')
+        WEB_CMD=$(cat Procfile | grep web | awk -F  ": " '{print $2}')
     else
         WEB_CMD=$KUBERO_BUILDPACK_DEFAULT_RUN_CMD
     fi
@@ -37,9 +37,9 @@ if [ ! -f init_build.sh ]; then
     echo -n $WEB_CMD >> init-web.sh
 fi
 
-if [ ! -f init_build.sh ]; then
+if [ ! -f init-worker.sh ]; then
     if [ -f Procfile ]; then
-        WORKER_CMD=$(cat Procfile | grep build | awk -F  ": " '{print $2}')
+        WORKER_CMD=$(cat Procfile | grep worker | awk -F  ": " '{print $2}')
     else
         WORKER_CMD=$KUBERO_BUILDPACK_DEFAULT_RUN_CMD
     fi
