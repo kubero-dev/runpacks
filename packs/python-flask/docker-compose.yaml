@@ -1,9 +1,9 @@
 version: "3.3"
 
 services:
-  python-flask-fetch: 
+  python-flask-fetch:
     container_name: "python-flask-fetch"
-    image: "ghcr.io/kubero-dev/docker-images/base:main"
+    image: "ghcr.io/kubero-dev/buildpacks/fetch:main"
     environment:
       - GIT_REPOSITORY=${GIT_REPOSITORY:-git@github.com:kubero-dev/template-python-flask.git}
       - GIT_BRANCH=${GIT_BRANCH:-main}
