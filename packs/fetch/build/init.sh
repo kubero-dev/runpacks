@@ -11,7 +11,7 @@ rm -rf /app/* /app/.* >> /dev/null 2>&1
 echo "========== Clone Repository from $GIT_REPOSITORY"
 cd /app
 git clone --recurse-submodules $GIT_REPOSITORY .
-#git checkout $GIT_BRANCH #TODO add branch support
+git checkout $GIT_BRANCH
 rm -rf .git
 
 echo "========== write startupscripts based on Procfile"
