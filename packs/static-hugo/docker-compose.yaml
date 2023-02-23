@@ -25,13 +25,10 @@ services:
 
   static-hugo-run:
     container_name: "static-hugo-run"
-    image:  webdevops/nginx:alpine
+    image:  caddy:latest
     working_dir: /app
-    #command: tail -f /dev/null
-    command: './init-web.sh'
-    environment:
-      - WEB_DOCUMENT_ROOT=/app/public
-      - WEB_DOCUMENT_INDEX=index.html
+    command: caddy file-server --listen :8080 --root /app/public
+    #command: './init-web.sh'
     volumes:
       - ../../data:/app:ro
     ports:
