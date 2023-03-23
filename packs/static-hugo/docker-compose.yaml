@@ -16,6 +16,7 @@ services:
     image: klakegg/hugo
     working_dir: /app
     #command: tail -f /dev/null
+    #command: hugo -D
     command: './init-build.sh'
     volumes:
       - ../../data:/app
