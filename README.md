@@ -1,11 +1,16 @@
 # Kubero Buildpacks
 
-Kubero does NOT build real docker images but uses allready public available an well maintained Images. A buildpack consists of a three parts: 
+
+> ℹ️ **NOTE**: Please open issues in the [Kubero](https://github.com/kubero-dev/kubero/issues) main repository.
+
+# Introduction
+
+Kubero does NOT build real docker images but uses allready public available an well maintained Images. A buildpack consists of a three parts:
 - fetch (initContainer)
 - build (initContainer)
 - run (actual running Container for web abd worker deployment)
 
-There are several examples in the packs folder to simulate on docker-compose how the app will be deployed. 
+There are several examples in the packs folder to simulate on docker-compose how the app will be deployed.
 
 ## fetch image
 This is also the home of the Kubero fetch image. The main purpose of this image ist to pull the code from the repository and prepare the init scripts based on the Procfile. The Procfile will be ignored if a init allready exists. This allows you to write more complex init scripts.
@@ -27,7 +32,7 @@ export GIT_REPOSITORY=git@github.com:kubero-dev/template-nodeapp.git
 export GIT_BRANCH=main
 ```
 
-2) In case you want to pull a private repository you need to place your private deploy key in the `./keys/deploykey` file. 
+2) In case you want to pull a private repository you need to place your private deploy key in the `./keys/deploykey` file.
 
 3) Build the base image
 ```bash
