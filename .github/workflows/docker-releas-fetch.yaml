@@ -6,13 +6,13 @@ name: Docker Fetch
 # documentation.
 
 on:
-  workflow_dispatch:
-  schedule:
-    - cron: '25 14 * * 0'
-  #push:
+  #workflow_dispatch:
+  #schedule:
+  #  - cron: '25 14 * * 0'
+  push:
   #  branches: [ "main" ]
-  #  # Publish semver tags as releases.
-  #  tags: [ 'v*.*.*' ]
+    # Publish semver tags as releases.
+    tags: [ 'v*.*.*' ]
   #pull_request:
   #  branches: [ "main" ]
 
@@ -69,7 +69,14 @@ jobs:
         id: fetch-meta
         uses: docker/metadata-action@v4
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           images: ${{ env.REGISTRY }}/${{ github.repository }}/fetch
+          tags: |
+            type=semver,pattern=v{{version}}
+            type=semver,pattern=v{{major}}.{{minor}}
+            type=semver,pattern=v{{major}}
+            type=raw,value=main,enable={{is_default_branch}}
+            type=raw,value=latest,enable={{is_default_branch}}
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
