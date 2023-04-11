@@ -24,7 +24,8 @@ services:
         condition: service_completed_successfully
   php-run:
     container_name: "php-run"
-    image: thecodingmachine/php:8.1-v4-apache
+    #image: thecodingmachine/php:8.1-v4-apache
+    image: ghcr.io/kubero-dev/buildpacks/php:latest
     build:
       context: .
       dockerfile: Dockerfile
@@ -36,11 +37,10 @@ services:
       - .env
     environment:
       - APP_KEY=base64:YmhiZ3J6NXV4aGE1bnh6cTh0eXJ0NzFqanozMnRmOXk=
-      - APACHE_DOCUMENT_ROOT=/app/public
     volumes:
       - ../../data:/app:rw
     ports:
-      - "8002:80"
+      - "8002:8080"
     depends_on:
       php-build:
         condition: service_completed_successfully
