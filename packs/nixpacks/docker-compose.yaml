@@ -1,0 +1,14 @@
+version: "3.3"
+
+services:
+  nixpack:
+    container_name: "nixpack"
+    build:
+      context: ./docker
+    working_dir: /app
+    command: tail -f /dev/null
+    #command: ../init.sh
+    environment:
+      - NIXPACKS_DEBIAN=true
+    volumes:
+      - ../../data:/app
