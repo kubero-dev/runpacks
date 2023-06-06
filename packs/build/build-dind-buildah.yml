@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: buildjob-buildah
+  name: buildjob-buildah-push
 spec:
   template:
     spec:
@@ -39,7 +39,6 @@ spec:
           volumeMounts:
             - mountPath: /app
               name: app-storage
-      containers:
         - name: kuberoapp-docker
           image: quay.io/containers/buildah:latest
           workingDir: /app
@@ -50,7 +49,7 @@ spec:
           - -c
           - |
             buildah build --isolation chroot -t registry-service.kubero.svc.cluster.local:5000/samplepipeline/production/kuberoapp-sample:latest .
-            buildah push registry-service.kubero.svc.cluster.local:5000/samplepipeline/production/kuberoapp-sample:latest
+            buildah push --tls-verify=false registry-service.kubero.svc.cluster.local:5000/samplepipeline/production/kuberoapp-sample:latest
           #- |
           #  docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD registry-service.kubero.svc.cluster.local:5000
           #  docker build -t registry-service.kubero.svc.cluster.local:5000/samplepipeline/production/kuberoapp-sample:latest .
@@ -58,6 +57,9 @@ spec:
           volumeMounts:
             - mountPath: /app
               name: app-storage
+      containers:
+        - name: kuberoapp-deployer
+          image: bitnami/kubectl:latest
       restartPolicy: Never
       volumes:
       - name: deployment-keys
