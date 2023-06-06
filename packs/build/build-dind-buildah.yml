@@ -60,6 +60,11 @@ spec:
       containers:
         - name: kuberoapp-deployer
           image: bitnami/kubectl:latest
+          command:
+            - sh
+            - -c
+            - |
+              kubectl patch kuberoapps test -p '{"spec":{"image":{"tag": "latest"}}}'
       restartPolicy: Never
       volumes:
       - name: deployment-keys
