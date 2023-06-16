@@ -50,10 +50,6 @@ spec:
           - |
             buildah build --isolation chroot -t registry-service.kubero.svc.cluster.local:5000/samplepipeline/production/kuberoapp-sample:latest .
             buildah push --tls-verify=false registry-service.kubero.svc.cluster.local:5000/samplepipeline/production/kuberoapp-sample:latest
-          #- |
-          #  docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD registry-service.kubero.svc.cluster.local:5000
-          #  docker build -t registry-service.kubero.svc.cluster.local:5000/samplepipeline/production/kuberoapp-sample:latest .
-          #  docker push registry-service.kubero.svc.cluster.local:5000/samplepipeline/production/kuberoapp-sample:latest
           volumeMounts:
             - mountPath: /app
               name: app-storage

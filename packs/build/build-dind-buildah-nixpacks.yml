@@ -80,6 +80,7 @@ spec:
             - |
               kubectl patch kuberoapps test -p '{"spec":{"image":{"tag": "latest"}}}'
       restartPolicy: Never
+      serviceAccount: zzzz-kuberoapp
       volumes:
       - name: deployment-keys
         secret:
