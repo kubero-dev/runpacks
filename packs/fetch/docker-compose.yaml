@@ -1,8 +1,8 @@
 version: "3.3"
 
 services:
-  base-build:
-    container_name: "base-build"
+  fetcher:
+    container_name: "fetcher"
     build:
       context: ./build
     working_dir: /app
@@ -14,3 +14,4 @@ services:
     volumes:
       - ../../data:/app
       - ../../keys/deploykey:/root/.ssh/deploykey
+      - ../../keys/deploykey:/home/kubero/.ssh-mounted/deploykey

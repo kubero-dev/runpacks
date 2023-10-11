@@ -5,6 +5,19 @@
 #ssh-add /root/.ssh/*
 #ssh-keyscan github.com >>~/.ssh/known_hosts
 
+
+# if not root, copy ssh keys and set permissions
+if [ ! "$(id -u)" -eq 0 ]; then
+    echo "========== copy ssh keys"
+    mkdir -p ~/.ssh
+    cp -r ~/.ssh-mounted/* ~/.ssh/
+    chmod -v 700 ~/.ssh
+    chmod -v 600 ~/.ssh/*
+    #chmod -v 644 ~/.ssh/*.pub
+    touch ~/.ssh/known_hosts
+    chmod -v 644 ~/.ssh/known_hosts
+fi
+
 echo "========== whipe the app dir"
 rm -rf /app/* /app/.* >> /dev/null 2>&1
 
