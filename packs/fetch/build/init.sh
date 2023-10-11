@@ -10,9 +10,9 @@
 if [ ! "$(id -u)" -eq 0 ]; then
     echo "========== copy ssh keys"
     mkdir -p ~/.ssh
-    cp -r ~/.ssh-mounted/* ~/.ssh/
     chmod -v 700 ~/.ssh
-    chmod -v 600 ~/.ssh/*
+    cat ~/.ssh-mounted/deploykey > ~/.ssh/deploykey
+    chmod -v 600 ~/.ssh/deploykey
     #chmod -v 644 ~/.ssh/*.pub
     touch ~/.ssh/known_hosts
     chmod -v 644 ~/.ssh/known_hosts
