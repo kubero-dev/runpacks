@@ -1,4 +1,4 @@
-FROM alpine:3.18
+FROM alpine:3
 RUN apk update
 RUN apk add git openssh openssh-client
 COPY --chmod=0755 ssh_config /etc/ssh/ssh_config

@@ -5,21 +5,29 @@
 #ssh-add /root/.ssh/*
 #ssh-keyscan github.com >>~/.ssh/known_hosts
 
+echo "========== debug"
+echo "GIT_REPOSITORY: $GIT_REPOSITORY"
+echo "GIT_BRANCH: $GIT_BRANCH"
+echo "KUBERO_BUILDPACK_DEFAULT_BUILD_CMD: $KUBERO_BUILDPACK_DEFAULT_BUILD_CMD"
+echo "KUBERO_BUILDPACK_DEFAULT_RUN_CMD: $KUBERO_BUILDPACK_DEFAULT_RUN_CMD"
+echo "User:" `whoami`
+echo "ID:" `id`
+echo "Home:" $HOME
+echo "PWD:" `pwd`
 
-# if not root, copy ssh keys and set permissions
-if [ ! "$(id -u)" -eq 0 ]; then
-    echo "========== copy ssh keys"
-    mkdir -p ~/.ssh
-    chmod -v 700 ~/.ssh
-    cat ~/.ssh-mounted/deploykey > ~/.ssh/deploykey
-    chmod -v 600 ~/.ssh/deploykey
-    #chmod -v 644 ~/.ssh/*.pub
-    touch ~/.ssh/known_hosts
-    chmod -v 644 ~/.ssh/known_hosts
-fi
+# prepare ssh keys
+echo "========== copy ssh keys"
+mkdir -p ~/.ssh
+chmod -v 700 ~/.ssh
+cat ~/.ssh-mounted/deploykey > ~/.ssh/deploykey
+chmod -v 600 ~/.ssh/deploykey
+#chmod -v 644 ~/.ssh/*.pub
+touch ~/.ssh/known_hosts
+chmod -v 644 ~/.ssh/known_hosts
 
 echo "========== whipe the app dir"
 rm -rf /app/* /app/.* >> /dev/null 2>&1
+echo "Done"
 
 echo "========== Clone Repository from $GIT_REPOSITORY"
 cd /app

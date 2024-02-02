@@ -3,6 +3,7 @@ version: "3.3"
 services:
   fetcher:
     container_name: "fetcher"
+    #user: root
     build:
       context: ./build
     working_dir: /app
@@ -13,5 +14,4 @@ services:
       - GIT_BRANCH=${GIT_BRANCH:-main}
     volumes:
       - ../../data:/app
-      - ../../keys/deploykey:/root/.ssh/deploykey
       - ../../keys/deploykey:/home/kubero/.ssh-mounted/deploykey
