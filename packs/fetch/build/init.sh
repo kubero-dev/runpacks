@@ -19,7 +19,7 @@ echo "PWD:" `pwd`
 echo "========== copy ssh keys"
 mkdir -p ~/.ssh
 chmod -v 700 ~/.ssh
-cat ~/.ssh-mounted/deploykey > ~/.ssh/deploykey
+cat /home/kubero/.ssh-mounted/deploykey > ~/.ssh/deploykey
 chmod -v 600 ~/.ssh/deploykey
 #chmod -v 644 ~/.ssh/*.pub
 touch ~/.ssh/known_hosts
