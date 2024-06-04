@@ -1,0 +1,10 @@
+# development environment
+services:
+  dev:
+    image: dispatch:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ["sleep", "infinity"]
+    env_file:
+      - .env

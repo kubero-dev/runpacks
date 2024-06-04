@@ -1,0 +1,17 @@
+apiVersion: kpack.io/v1alpha2
+kind: Build
+metadata:
+  name: sample3
+  #kubero.dev/app: example
+  #kubero.dev/phase: dev
+  #kubero.dev/pipeline: pipelinename
+spec:
+  tags:
+  - registry.kubero.linode.shoks.ch/kapck/example:latest
+  serviceAccountName: kpack-sa
+  builder:
+    image: gcr.io/paketo-buildpacks/builder:base
+  source:
+    git:
+      url: https://github.com/kubero-dev/template-nodeapp.git
+      revision: main

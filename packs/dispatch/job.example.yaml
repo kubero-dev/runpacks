@@ -1,0 +1,53 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  labels:
+    batch.kubernetes.io/job-name: example
+    job-name: example
+  name: example
+spec:
+  backoffLimit: 2
+  completionMode: NonIndexed
+  completions: 1
+  manualSelector: false
+  parallelism: 1
+  podReplacementPolicy: TerminatingOrFailed
+  suspend: false
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        batch.kubernetes.io/job-name: example
+        job-name: example
+    spec:
+      containers:
+      - image: ghcr.io/kubero-dev/deployer:latest
+        imagePullPolicy: Always
+        name: example
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        env:
+        - name: APP
+          value: example
+        - name: PHASE
+          value: dev
+        - name: PIPELINE
+          value: pipelinename
+        - name: REPOSITORY
+          value: registry.kubero.linode.shoks.ch/kapck/example
+        - name: TAG
+          value: latest
+        - name: SERVICE_ACCOUNT
+          value: kpack-sa
+        - name: BUILDER
+          value: gcr.io/paketo-buildpacks/builder:base
+        - name: URL
+          value: https://github.com/kubero-dev/template-nodeapp.git
+        - name: REVISION
+          value: main
+      dnsPolicy: ClusterFirst
+      restartPolicy: Never
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
