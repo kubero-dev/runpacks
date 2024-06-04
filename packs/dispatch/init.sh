@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # check if all required variables are set
-if [ -z "$APP" ] || [ -z "$PHASE" ] || [ -z "$PIPELINE" ] || [ -z "$REPOSITORY" ] || [ -z "$TAG" ] || [ -z "$SERVICE_ACCOUNT" ] || [ -z "$BUILDER" ] || [ -z "$URL" ] || [ -z "$REVISION" ]; then
+if [ -z "$APP" ] ||[ -z "$PIPELINE" ] || [ -z "$REPOSITORY" ] || [ -z "$TAG" ] || [ -z "$SERVICE_ACCOUNT" ] || [ -z "$BUILDER" ] || [ -z "$GIT_URL" ] || [ -z "$GIT_REF" ]; then
   echo "$(date) One or more required variables are not set"
   exit 1
 fi
@@ -19,8 +19,8 @@ spec:
     image: ${BUILDER}
   source:
     git:
-      url: ${URL}
-      revision: ${REVISION}
+      url: ${GIT_URL}
+      revision: ${GIT_REF}
 EOF
 
 # check if kubectl command failed
