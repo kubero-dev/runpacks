@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 #echo "========= load deployment keys"
 #eval `ssh-agent`
 #ssh-add /root/.ssh/*
