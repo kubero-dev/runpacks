@@ -46,14 +46,5 @@ while true; do
   sleep 1
 done
 
-sleep 2
-
-# patch kuberoes resource with the new image
-kubectl patch --type=merge kuberoapps.application.kubero.dev ${APP} -p "{\"spec\":{\"image\":{\"repository\":\"${REPOSITORY}\",\"tag\":\"${TAG}\"}}}"
-if [ $? -ne 0 ]; then
-  echo "$(date) Failed to patch kubero app resource"
-  exit 1
-fi
-
-echo "$(date) Successfully patched kubero app resource"
+echo "$(date) Successfully build docker image"
 exit 0
