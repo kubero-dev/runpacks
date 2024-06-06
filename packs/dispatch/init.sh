@@ -39,7 +39,8 @@ while true; do
     break
   fi
   if [ "$PHASE" == "Failed" ]; then
-    echo "$(date) uild failed"
+    echo "$(date) Build failed"
+    exit 1
     break
   fi
   echo "$(date) Waiting for build to complete...$PHASE"
