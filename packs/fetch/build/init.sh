@@ -28,7 +28,7 @@ touch ~/.ssh/known_hosts
 chmod -v 644 ~/.ssh/known_hosts
 
 echo "========== whipe the app dir"
-rm -rf /app/* /app/.* >> /dev/null 2>&1
+rm -rf /app/* /app/.* >> /dev/null 2>&1 || true
 echo "Done"
 
 echo "========== Clone Repository from $GIT_REPOSITORY"
