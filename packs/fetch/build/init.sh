@@ -34,6 +34,8 @@ cd /app
 git config --global --add safe.directory /app #Mark git directory as safe
 git clone --recurse-submodules $GIT_REPOSITORY .
 git checkout $GIT_BRANCH
+git log -n1 --pretty=format:'export REF_NAMES="%D"%nexport COMMIT=%H%nexport AUTHOR=%an%nexport AUTHOR_EMAIL=%ae%nexport DATE="%ad"%nexport SUBJECT="%s"%nexport BODY="%b"%n' > kubero_commit.env
+
 rm -rf .git
 
 echo "========== write startupscripts based on Procfile"
